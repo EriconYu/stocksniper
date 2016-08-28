@@ -11,42 +11,72 @@ import (
 
 //getGifDirec ...
 func getGifDirec(typeGif string) (dir string) {
-	dir = "img/" + time.Now().String()[:10] + "/"
-	if e := os.Mkdir(dir, 0666); e != nil {
-		fmt.Println("e is:", e)
+	if time.Now().Weekday() == time.Saturday {
+		dir = "img/" + time.Now().AddDate(0, 0, -1).String()[:10] + "/"
+	} else if time.Now().Weekday() == time.Sunday {
+		dir = "img/" + time.Now().AddDate(0, 0, -2).String()[:10] + "/"
+	} else if time.Now().Weekday() == time.Monday {
+		if time.Now().Hour() < 9 {
+			dir = "img/" + time.Now().AddDate(0, 0, -3).String()[:10] + "/"
+		} else {
+			dir = "img/" + time.Now().String()[:10] + "/"
+		}
+	} else {
+		if time.Now().Hour() < 9 {
+			dir = "img/" + time.Now().AddDate(0, 0, -1).String()[:10] + "/"
+
+		} else {
+			dir = "img/" + time.Now().String()[:10] + "/"
+		}
 	}
-	// dir = dir + typeGif + "/"
-	// if e := os.Mkdir(dir, 0666); e != nil {
-	// 	fmt.Println("e is:", e)
-	// }
-
-	fmt.Println("dir is", dir)
 	return dir
-
 }
 
 //getGifName ...
 func getGifName(typeGif, salesCity, stockCode string) (gifName string) {
-	gifName = time.Now().String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+	if time.Now().Weekday() == time.Saturday {
+		gifName = time.Now().AddDate(0, 0, -1).String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+	} else if time.Now().Weekday() == time.Sunday {
+		gifName = time.Now().AddDate(0, 0, -2).String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+	} else if time.Now().Weekday() == time.Monday {
+		if time.Now().Hour() < 9 {
+			gifName = time.Now().AddDate(0, 0, -3).String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+		} else {
+			gifName = time.Now().String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+		}
+	} else {
+		if time.Now().Hour() < 9 {
+			gifName = time.Now().AddDate(0, 0, -1).String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+
+		} else {
+			gifName = time.Now().String()[:10] + "_" + typeGif + "_" + stockCode + ".gif"
+		}
+	}
 	return gifName
 }
 
-//GetGif ... typeGif
+//GetGif ...
 func GetGif(typeGif, salesCity, stockCode string) (ok bool) {
 	url := fmt.Sprintf(extern.SinaStockGifAPI, typeGif)
 	url = url + salesCity + stockCode + ".gif"
 	req := httplib.Get(url)
 	if filestream, err := req.Bytes(); err == nil {
 		if len(filestream) == 0 {
-			fmt.Println(stockCode, "Not Find!")
+			fmt.Println(stockCode, "GetGif Not Find!")
 			return false
 		}
-		f, e := os.OpenFile(getGifDirec(typeGif)+getGifName(typeGif, salesCity, stockCode), os.O_RDWR, 0666)
+		dir := getGifDirec(typeGif)
+		if e := os.MkdirAll(dir, 0777); e != nil {
+			fmt.Println("GetGif MkdirAll e is:", e)
+		}
+
+		f, e := os.OpenFile(dir+getGifName(typeGif, salesCity, stockCode), os.O_RDWR, 0666)
 		if e == nil {
 			f.Write(filestream)
+			ok = true
 		} else {
-			fmt.Println("OpenFile e:", e, "Now Create It")
-			f, e := os.Create(getGifDirec(typeGif) + getGifName(typeGif, salesCity, stockCode))
+			//fmt.Println("OpenFile e:", e, "Now Create It")
+			f, e := os.Create(dir + getGifName(typeGif, salesCity, stockCode))
 			if e == nil {
 				f.Write(filestream)
 				ok = true

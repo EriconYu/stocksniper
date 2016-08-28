@@ -76,7 +76,7 @@ func (s *StockPriceInfo) parseStockID(stockInfo string) {
 func (s *StockPriceInfo) parseStockPrice(stockInfo string) {
 	lenth := len(stockInfo)
 	stockPriceInfo := stockInfo[21 : lenth-3]
-	fmt.Println("stockPriceInfo is", stockPriceInfo)
+	//	fmt.Println("stockPriceInfo is", stockPriceInfo)
 	PriceArray := strings.Split(stockPriceInfo, ",")
 	//lenth = len(PriceArray)
 	// fmt.Println("lenth is ", lenth)  //33
