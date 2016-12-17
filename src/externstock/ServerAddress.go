@@ -1,4 +1,4 @@
-package extern
+package externstock
 
 const (
 	//SinaStockAPI 新浪股票公开接口

@@ -1,12 +1,13 @@
 package stocklib
 
 import (
-	"extern"
+	"externstock"
 	"fmt"
 	"os"
 	"time"
 
 	"github.com/astaxie/beego/httplib"
+	"github.com/cihub/seelog"
 )
 
 //getGifDirec ...
@@ -57,17 +58,18 @@ func getGifName(typeGif, salesCity, stockCode string) (gifName string) {
 
 //GetGif ...
 func GetGif(typeGif, salesCity, stockCode string) (ok bool) {
-	url := fmt.Sprintf(extern.SinaStockGifAPI, typeGif)
+	url := fmt.Sprintf(externstock.SinaStockGifAPI, typeGif)
 	url = url + salesCity + stockCode + ".gif"
 	req := httplib.Get(url)
 	if filestream, err := req.Bytes(); err == nil {
 		if len(filestream) == 0 {
-			fmt.Println(stockCode, "GetGif Not Find!")
+			seelog.Error(salesCity, stockCode, "GetGif Not Find!")
 			return false
 		}
 		dir := getGifDirec(typeGif)
 		if e := os.MkdirAll(dir, 0777); e != nil {
-			fmt.Println("GetGif MkdirAll e is:", e)
+			seelog.Error("GetGif MkdirAll e is:", e)
+			return false
 		}
 
 		f, e := os.OpenFile(dir+getGifName(typeGif, salesCity, stockCode), os.O_RDWR, 0666)
@@ -75,13 +77,13 @@ func GetGif(typeGif, salesCity, stockCode string) (ok bool) {
 			f.Write(filestream)
 			ok = true
 		} else {
-			//fmt.Println("OpenFile e:", e, "Now Create It")
+			//seelog.Info("OpenFile e:", e, "Now Create It")
 			f, e := os.Create(dir + getGifName(typeGif, salesCity, stockCode))
 			if e == nil {
 				f.Write(filestream)
 				ok = true
 			} else {
-				fmt.Println("CreateFile e:", e)
+				seelog.Error("CreateFile e:", e)
 				ok = false
 			}
 		}

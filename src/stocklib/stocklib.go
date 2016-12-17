@@ -1,13 +1,13 @@
 package stocklib
 
 import (
-	"extern"
-	"fmt"
+	"externstock"
 	"strconv"
 	"strings"
 
 	"github.com/astaxie/beego/httplib"
 	"github.com/axgle/mahonia"
+	"github.com/cihub/seelog"
 )
 
 //StockPriceInfo 股票价格信息
@@ -51,16 +51,18 @@ type StockPriceInfo struct {
 }
 
 //GetStockInfo 获取股票信息
-func (s *StockPriceInfo) GetStockInfo() (stockInfo string, err error) {
-	stockURL := extern.SinaStockAPI + s.SalesCity + s.StockID
+func (s *StockPriceInfo) GetStockInfo() (stockPriceInfo *StockPriceInfo, err error) {
+	stockURL := externstock.SinaStockAPI + s.SalesCity + s.StockID
+	//seelog.Info("stockURL is ", stockURL)
 	req := httplib.Get(stockURL)
 	if input, err := req.Bytes(); err == nil {
 		dec := mahonia.NewDecoder("gbk")
-		stockInfo = dec.ConvertString(string(input))
+		stockInfo := dec.ConvertString(string(input))
+		s.parseStockInfo(stockInfo)
 	} else {
-		fmt.Println("GetStockInfo err:", err)
+		seelog.Info("GetStockInfo err:", err)
 	}
-	return stockInfo, err
+	return s, err
 }
 
 func (s *StockPriceInfo) parseStockID(stockInfo string) {
@@ -69,17 +71,17 @@ func (s *StockPriceInfo) parseStockID(stockInfo string) {
 	stockid = stockid[11:]
 	s.SalesCity = stockid[:2]
 	s.StockID = stockid[2:]
-	//fmt.Println("city is", s.SalesCity)
-	//fmt.Println("id is", s.StockID)
+	//seelog.Info("city is", s.SalesCity)
+	//seelog.Info("id is", s.StockID)
 }
 
 func (s *StockPriceInfo) parseStockPrice(stockInfo string) {
 	lenth := len(stockInfo)
 	stockPriceInfo := stockInfo[21 : lenth-3]
-	//	fmt.Println("stockPriceInfo is", stockPriceInfo)
+	//	seelog.Info("stockPriceInfo is", stockPriceInfo)
 	PriceArray := strings.Split(stockPriceInfo, ",")
 	//lenth = len(PriceArray)
-	// fmt.Println("lenth is ", lenth)  //33
+	// seelog.Info("lenth is ", lenth)  //33
 	s.StockName = PriceArray[0]
 	s.OpeningPriceToday, _ = strconv.ParseFloat(PriceArray[1], 64)
 	s.ClosingPriceYesterday, _ = strconv.ParseFloat(PriceArray[2], 64)
@@ -112,11 +114,11 @@ func (s *StockPriceInfo) parseStockPrice(stockInfo string) {
 	s.SoldPrice5, _ = strconv.ParseFloat(PriceArray[29], 64)
 	s.Data = PriceArray[30]
 	s.Time = PriceArray[31]
-	//fmt.Println(s)
+	//seelog.Info(s)
 }
 
-//ParseStockInfo ...
-func (s *StockPriceInfo) ParseStockInfo(stockInfo string) {
+//parseStockInfo ...
+func (s *StockPriceInfo) parseStockInfo(stockInfo string) {
 	s.parseStockID(stockInfo)
 	s.parseStockPrice(stockInfo)
 }
