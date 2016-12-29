@@ -18,7 +18,7 @@ func MinSHGoroutine() {
 	}()
 }
 
-//MinSZGoroutine 所有股票分时图片获取
+//MinSZGoroutine 深市所有股票分时图片获取
 func MinSZGoroutine() {
 	//分时
 	go func() {
