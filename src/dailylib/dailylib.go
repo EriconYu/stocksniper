@@ -1,7 +1,7 @@
 package dailylib
 
 import (
-	"extern"
+	"externstock"
 	"fmt"
 	"stocklib"
 )
@@ -9,9 +9,9 @@ import (
 //DailySHGoroutine 沪市日K
 func DailySHGoroutine() {
 	go func() {
-		for i := 1; i < 999999; i++ {
+		for i := 1; i < 300000; i++ {
 			//
-			go stocklib.GetGif(extern.SinaStockDaily, "sh", fmt.Sprintf("%.6d", i))
+			go stocklib.GetGif(externstock.SinaStockDaily, "sh", fmt.Sprintf("%.6d", i))
 		}
 	}()
 }
@@ -19,9 +19,9 @@ func DailySHGoroutine() {
 //DailySZGoroutine 深市日K
 func DailySZGoroutine() {
 	go func() {
-		for i := 1; i < 999999; i++ {
+		for i := 300000; i < 999999; i++ {
 			//
-			go stocklib.GetGif(extern.SinaStockDaily, "sz", fmt.Sprintf("%.6d", i))
+			go stocklib.GetGif(externstock.SinaStockDaily, "sz", fmt.Sprintf("%.6d", i))
 		}
 	}()
 }
@@ -29,15 +29,15 @@ func DailySZGoroutine() {
 //DailyAllGoroutine  两市日K
 func DailyAllGoroutine() {
 	go func() {
-		for i := 1; i < 999999; i++ {
+		for i := 1; i < 300000; i++ {
 			//
-			go stocklib.GetGif(extern.SinaStockDaily, "sh", fmt.Sprintf("%.6d", i))
+			go stocklib.GetGif(externstock.SinaStockDaily, "sh", fmt.Sprintf("%.6d", i))
 		}
 	}()
 	go func() {
-		for i := 1; i < 999999; i++ {
+		for i := 300000; i < 999999; i++ {
 			//
-			go stocklib.GetGif(extern.SinaStockDaily, "sz", fmt.Sprintf("%.6d", i))
+			go stocklib.GetGif(externstock.SinaStockDaily, "sz", fmt.Sprintf("%.6d", i))
 		}
 	}()
 }

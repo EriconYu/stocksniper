@@ -18,7 +18,11 @@ func main() {
 	syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rlimit)
 
 	//UserAPPCode
-	// realtimelib.RealtimeOneStock("300345")
+	//realtimelib.RealtimeAllStocks()
+	//monthlylib.MonthlyAllGoroutine()
 
+	//    for {
+	// 	time.Sleep(1000 * time.Second)
+	// }
 	seelog.Flush()
 }

@@ -17,11 +17,11 @@ func RealtimeOneStock(StockID string) {
 			stockinfo.SalesCity = "sz"
 		}
 		stockinfo.StockID = StockID
-		if _, e := stockinfo.GetStockInfo(); e == nil {
+		if _, ok := stockinfo.GetStockInfo(); ok == true {
 			//这里可以各种high了
 			seelog.Info(stockinfo.StockName)
 		} else {
-			fmt.Printf("Get %s Info err:%s\n", stockinfo.StockID, e.Error())
+			fmt.Printf("Get %s Info ok:%v\n", stockinfo.StockID, ok)
 		}
 	}()
 }
@@ -32,12 +32,12 @@ func RealtimeSHStocks() {
 	go func() {
 		var stockinfo stocklib.StockPriceInfo
 		stockinfo.SalesCity = "sh"
-		for i := 1; i < 999999; i++ {
+		for i := 1; i < 300000; i++ {
 			stockinfo.StockID = fmt.Sprintf("%.6d", i)
-			if _, e := stockinfo.GetStockInfo(); e == nil {
+			if _, ok := stockinfo.GetStockInfo(); ok == true {
 				//seelog.Info(string(info))
 			} else {
-				fmt.Printf("Get %s Info err:%s\n", stockinfo.SalesCity+stockinfo.StockID, e.Error())
+				fmt.Printf("Get %s Info ok:%v\n", stockinfo.SalesCity+stockinfo.StockID, ok)
 			}
 		}
 	}()
@@ -48,12 +48,12 @@ func RealtimeSZStocks() {
 	go func() {
 		var stockinfo stocklib.StockPriceInfo
 		stockinfo.SalesCity = "sz"
-		for i := 1; i < 999999; i++ {
+		for i := 300000; i < 999999; i++ {
 			stockinfo.StockID = fmt.Sprintf("%.6d", i)
-			if _, e := stockinfo.GetStockInfo(); e == nil {
+			if _, ok := stockinfo.GetStockInfo(); ok == true {
 				//seelog.Info(string(info))
 			} else {
-				fmt.Printf("Get %s Info err:%s\n", stockinfo.SalesCity+stockinfo.StockID, e.Error())
+				fmt.Printf("Get %s Info ok:%v\n", stockinfo.SalesCity+stockinfo.StockID, ok)
 			}
 		}
 	}()
@@ -66,24 +66,24 @@ func RealtimeAllStocks() {
 	go func() {
 		var stockinfo stocklib.StockPriceInfo
 		stockinfo.SalesCity = "sh"
-		for i := 1; i < 999999; i++ {
+		for i := 1; i < 300000; i++ {
 			stockinfo.StockID = fmt.Sprintf("%.6d", i)
-			if _, e := stockinfo.GetStockInfo(); e == nil {
+			if _, ok := stockinfo.GetStockInfo(); ok == true {
 				//seelog.Info(string(info))
 			} else {
-				fmt.Printf("Get %s Info err:%s\n", stockinfo.SalesCity+stockinfo.StockID, e.Error())
+				fmt.Printf("Get %s Info ok:%v\n", stockinfo.SalesCity+stockinfo.StockID, ok)
 			}
 		}
 	}()
 	go func() {
 		var stockinfo stocklib.StockPriceInfo
 		stockinfo.SalesCity = "sz"
-		for i := 1; i < 999999; i++ {
+		for i := 300000; i < 999999; i++ {
 			stockinfo.StockID = fmt.Sprintf("%.6d", i)
-			if _, e := stockinfo.GetStockInfo(); e == nil {
+			if _, ok := stockinfo.GetStockInfo(); ok == true {
 				//seelog.Info(string(info))
 			} else {
-				fmt.Printf("Get %s Info err:%s\n", stockinfo.SalesCity+stockinfo.StockID, e.Error())
+				fmt.Printf("Get %s Info ok:%v\n", stockinfo.SalesCity+stockinfo.StockID, ok)
 			}
 		}
 	}()

@@ -51,18 +51,24 @@ type StockPriceInfo struct {
 }
 
 //GetStockInfo 获取股票信息
-func (s *StockPriceInfo) GetStockInfo() (stockPriceInfo *StockPriceInfo, err error) {
+func (s *StockPriceInfo) GetStockInfo() (stockPriceInfo *StockPriceInfo, ok bool) {
 	stockURL := externstock.SinaStockAPI + s.SalesCity + s.StockID
 	//seelog.Info("stockURL is ", stockURL)
 	req := httplib.Get(stockURL)
 	if input, err := req.Bytes(); err == nil {
 		dec := mahonia.NewDecoder("gbk")
 		stockInfo := dec.ConvertString(string(input))
-		s.parseStockInfo(stockInfo)
+		if len(stockInfo) < 25 {
+			ok = false
+		} else {
+			s.parseStockInfo(stockInfo)
+			ok = true
+		}
 	} else {
 		seelog.Info("GetStockInfo err:", err)
+		ok = false
 	}
-	return s, err
+	return s, ok
 }
 
 func (s *StockPriceInfo) parseStockID(stockInfo string) {

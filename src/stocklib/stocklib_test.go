@@ -9,7 +9,7 @@ func TestGetStockInfo(t *testing.T) {
 	stockInfo.StockID = "000025"
 	//info, err := stockInfo.GetStockInfo()
 	_, err := stockInfo.GetStockInfo()
-	if err != nil {
+	if err != true {
 		t.Error("TestGetStockInfo err:", err)
 	}
 }

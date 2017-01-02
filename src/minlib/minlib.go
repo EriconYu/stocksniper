@@ -1,7 +1,7 @@
 package minlib
 
 import (
-	"extern"
+	"externstock"
 	"fmt"
 	"stocklib"
 	"time"
@@ -11,8 +11,8 @@ import (
 func MinSHGoroutine() {
 	//分时
 	go func() {
-		for i := 1; i < 999999; i++ {
-			stocklib.GetGif(extern.SinaStockMin, "sh", fmt.Sprintf("%.6d", i))
+		for i := 1; i < 300000; i++ {
+			stocklib.GetGif(externstock.SinaStockMin, "sh", fmt.Sprintf("%.6d", i))
 		}
 		shGetGif <- time.Now().String()[:19]
 	}()
@@ -22,8 +22,8 @@ func MinSHGoroutine() {
 func MinSZGoroutine() {
 	//分时
 	go func() {
-		for i := 1; i < 999999; i++ {
-			stocklib.GetGif(extern.SinaStockMin, "sz", fmt.Sprintf("%.6d", i))
+		for i := 300000; i < 999999; i++ {
+			stocklib.GetGif(externstock.SinaStockMin, "sz", fmt.Sprintf("%.6d", i))
 		}
 		szGetGif <- time.Now().String()[:19]
 	}()
@@ -33,14 +33,14 @@ func MinSZGoroutine() {
 func MinAllGoroutine() {
 	//分时
 	go func() {
-		for i := 1; i < 999999; i++ {
-			stocklib.GetGif(extern.SinaStockMin, "sh", fmt.Sprintf("%.6d", i))
+		for i := 1; i < 300000; i++ {
+			stocklib.GetGif(externstock.SinaStockMin, "sh", fmt.Sprintf("%.6d", i))
 		}
 		shGetGif <- time.Now().String()[:19]
 	}()
 	go func() {
-		for i := 1; i < 999999; i++ {
-			stocklib.GetGif(extern.SinaStockMin, "sz", fmt.Sprintf("%.6d", i))
+		for i := 300000; i < 999999; i++ {
+			stocklib.GetGif(externstock.SinaStockMin, "sz", fmt.Sprintf("%.6d", i))
 		}
 		szGetGif <- time.Now().String()[:19]
 	}()
