@@ -1,6 +1,9 @@
 package stocklib
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 //TestGetStockInfo ....
 func TestGetStockInfo(t *testing.T) {
@@ -24,4 +27,8 @@ func TestParseStockInfo(t *testing.T) {
 	// } else {
 	// 	t.Error("GetStockInfo err:", err)
 	// }
+}
+
+func TestGetSalesCity(t *testing.T) {
+	fmt.Println(GetSalesCity("600690"))
 }

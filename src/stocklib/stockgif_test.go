@@ -12,7 +12,7 @@ func TestGetGifDirec(t *testing.T) {
 
 //TestGetGif ....
 func TestGetGif(t *testing.T) {
-	ok := GetGif(externstock.SinaStockMin, "sh", "000001")
+	ok := GetGif(externstock.SinaStockMin, "sz", "000001")
 	if ok == false {
 		t.Error("GetGif Error")
 	}

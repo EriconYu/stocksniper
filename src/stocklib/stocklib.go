@@ -5,9 +5,10 @@ import (
 	"strconv"
 	"strings"
 
+	"fmt"
+
 	"github.com/astaxie/beego/httplib"
 	"github.com/axgle/mahonia"
-	"github.com/cihub/seelog"
 )
 
 //StockPriceInfo 股票价格信息
@@ -53,7 +54,7 @@ type StockPriceInfo struct {
 //GetStockInfo 获取股票信息
 func (s *StockPriceInfo) GetStockInfo() (stockPriceInfo *StockPriceInfo, ok bool) {
 	stockURL := externstock.SinaStockAPI + s.SalesCity + s.StockID
-	//seelog.Info("stockURL is ", stockURL)
+	fmt.Println("stockURL is ", stockURL)
 	req := httplib.Get(stockURL)
 	if input, err := req.Bytes(); err == nil {
 		dec := mahonia.NewDecoder("gbk")
@@ -65,7 +66,7 @@ func (s *StockPriceInfo) GetStockInfo() (stockPriceInfo *StockPriceInfo, ok bool
 			ok = true
 		}
 	} else {
-		seelog.Info("GetStockInfo err:", err)
+		fmt.Println("GetStockInfo err:", err)
 		ok = false
 	}
 	return s, ok
@@ -77,17 +78,17 @@ func (s *StockPriceInfo) parseStockID(stockInfo string) {
 	stockid = stockid[11:]
 	s.SalesCity = stockid[:2]
 	s.StockID = stockid[2:]
-	//seelog.Info("city is", s.SalesCity)
-	//seelog.Info("id is", s.StockID)
+	//fmt.Println("city is", s.SalesCity)
+	//fmt.Println("id is", s.StockID)
 }
 
 func (s *StockPriceInfo) parseStockPrice(stockInfo string) {
 	lenth := len(stockInfo)
 	stockPriceInfo := stockInfo[21 : lenth-3]
-	//	seelog.Info("stockPriceInfo is", stockPriceInfo)
+	//	fmt.Println("stockPriceInfo is", stockPriceInfo)
 	PriceArray := strings.Split(stockPriceInfo, ",")
 	//lenth = len(PriceArray)
-	// seelog.Info("lenth is ", lenth)  //33
+	// fmt.Println("lenth is ", lenth)  //33
 	s.StockName = PriceArray[0]
 	s.OpeningPriceToday, _ = strconv.ParseFloat(PriceArray[1], 64)
 	s.ClosingPriceYesterday, _ = strconv.ParseFloat(PriceArray[2], 64)
@@ -120,11 +121,37 @@ func (s *StockPriceInfo) parseStockPrice(stockInfo string) {
 	s.SoldPrice5, _ = strconv.ParseFloat(PriceArray[29], 64)
 	s.Data = PriceArray[30]
 	s.Time = PriceArray[31]
-	//seelog.Info(s)
+	//fmt.Println(s)
 }
 
 //parseStockInfo ...
 func (s *StockPriceInfo) parseStockInfo(stockInfo string) {
 	s.parseStockID(stockInfo)
 	s.parseStockPrice(stockInfo)
+}
+
+func GetSalesCity(stockId string) (city string) {
+	if len(stockId) != 6 {
+		return ""
+	}
+	switch stockId[0] {
+	case '0':
+		return "sz"
+	case '1':
+		return "sh"
+	case '2':
+		return "sz"
+	case '3':
+		return "sz"
+	case '4':
+		return "sz"
+	case '5':
+		return "sz"
+	case '6':
+		return "sh"
+	case '7':
+		return "sz"
+	default:
+		return "sz"
+	}
 }

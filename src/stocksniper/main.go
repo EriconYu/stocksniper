@@ -1,28 +1,34 @@
 package main
 
 import (
-	"syscall"
+	"fmt"
+	"handler"
+	"stocklib/monthlylib"
+	"stocklib/realtimelib"
+	"time"
 
-	"github.com/cihub/seelog"
+	"os"
+
+	"github.com/kataras/iris"
 )
 
 func main() {
-	seelog.Info("Hello,I am stock sniper!Biu Biu Biu ~")
+	fmt.Println("Hello,I am stock sniper!Biu Biu Biu ~")
 
-	var rlimit syscall.Rlimit
-	syscall.Getrlimit(syscall.RLIMIT_NOFILE, &rlimit)
+	app := iris.New()
 
-	seelog.Info("rlimit is ", rlimit)
-	rlimit.Cur = 65536
-	rlimit.Max = 65536
-	syscall.Setrlimit(syscall.RLIMIT_NOFILE, &rlimit)
+	app.Get("/index", handler.IndexHandler)
+	app.Get("/watch/:stockid", handler.WatchHandler)
+	app.Post("/watch", handler.WatchHandler)
 
-	//UserAPPCode
-	//realtimelib.RealtimeAllStocks()
-	//monthlylib.MonthlyAllGoroutine()
+	err := app.Run(iris.Addr(":8080"))
+	if err != nil {
+		fmt.Printf("iris app run err:", err)
+		os.Exit(-1)
+	}
+	// UserAPPCode
+	realtimelib.RealtimeAllStocks()
+	monthlylib.MonthlyAllGoroutine()
 
-	//    for {
-	// 	time.Sleep(1000 * time.Second)
-	// }
-	seelog.Flush()
+	time.Sleep(10 * time.Second)
 }

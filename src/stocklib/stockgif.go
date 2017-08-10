@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/httplib"
-	"github.com/cihub/seelog"
 )
 
 //getGifDirec ...
@@ -63,12 +62,12 @@ func GetGif(typeGif, salesCity, stockCode string) (ok bool) {
 	req := httplib.Get(url)
 	if filestream, err := req.Bytes(); err == nil {
 		if len(filestream) == 0 {
-			seelog.Error(salesCity, stockCode, "GetGif Not Find!")
+			fmt.Println(salesCity, stockCode, "GetGif Not Find!")
 			return false
 		}
 		dir := getGifDirec(typeGif)
 		if e := os.MkdirAll(dir, 0777); e != nil {
-			seelog.Error("GetGif MkdirAll e is:", e)
+			fmt.Println("GetGif MkdirAll e is:", e)
 			return false
 		}
 
@@ -83,7 +82,7 @@ func GetGif(typeGif, salesCity, stockCode string) (ok bool) {
 				f.Write(filestream)
 				ok = true
 			} else {
-				seelog.Error("CreateFile e:", e)
+				fmt.Println("CreateFile e:", e)
 				ok = false
 			}
 		}

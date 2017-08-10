@@ -6,6 +6,14 @@ import (
 	"stocklib"
 )
 
+func DailyKLine(StockID string) {
+	var stockinfo stocklib.StockPriceInfo
+	stockinfo.SalesCity = stocklib.GetSalesCity(StockID)
+
+	stockinfo.StockID = StockID
+	stocklib.GetGif(externstock.SinaStockDaily, stockinfo.SalesCity, stockinfo.StockID)
+}
+
 //DailySHGoroutine 沪市日K
 func DailySHGoroutine() {
 	go func() {
