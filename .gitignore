@@ -1,2 +1,5 @@
-bin/*
+bin/stocksniper
+bin/stocksniper*
 pkg/*
+cache/
+idea/*

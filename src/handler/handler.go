@@ -13,7 +13,7 @@ type StockWatchInfo struct {
 }
 
 func IndexHandler(ctx context.Context) {
-	ctx.WriteString("helloworld")
+	ctx.View("index.html")
 }
 
 func WatchHandler(ctx context.Context) {

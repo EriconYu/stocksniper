@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - stocksniper@stackbang.com">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+    <root id="1"/>
+    <schema id="2" parent="1" name="stocksniper">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="cache-cloud"/>
+    <schema id="4" parent="1" name="dashboard"/>
+    <schema id="5" parent="1" name="falcon_links"/>
+    <schema id="6" parent="1" name="falcon_portal"/>
+    <schema id="7" parent="1" name="graph"/>
+    <schema id="8" parent="1" name="information_schema"/>
+    <schema id="9" parent="1" name="mysql"/>
+    <schema id="10" parent="1" name="performance_schema"/>
+    <schema id="11" parent="1" name="uic"/>
+    <table id="12" parent="2" name="stocks"/>
+    <column id="13" parent="12" name="stock_id">
+      <Position>1</Position>
+      <DataType>varchar(8)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="14" parent="12" name="stock_name">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="15" parent="12" name="sales_city">
+      <Position>3</Position>
+      <DataType>varchar(2)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="16" parent="12" name="stock_id_UNIQUE">
+      <ColNames>stock_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+  </database-model>
+</dataSource>
