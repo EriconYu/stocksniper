@@ -23,6 +23,7 @@ func main() {
 	htmlTmpl := iris.HTML("./static/html/", ".html")
 	htmlTmpl.Reload(true)
 	app.RegisterView(htmlTmpl)
+	app.Favicon("./static/html/favicon.ico", "/favicon.ico")
 
 	app.Get("/", handler.IndexHandler)
 	app.Get("/index", handler.IndexHandler)

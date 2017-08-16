@@ -2,13 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="/css/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="/css/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/js/jquery/jquery-3.2.1.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/css/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+
     <title>StockSniper</title>
+
+
 </head>
-<body>
+<body class="container">
 <div>
-    <p>请输入股票代码:</p>
-    <input>
-    <button>查看</button>
+
+    <script>
+        function getStockInfo() {
+            var stockId = $("#stockid").val();
+            if (stockId.length != 6){
+                alert("输入的股票代码不合法！！！");
+                $("#stockid").text("");
+                return;
+            }
+            $.get("/watch/" + stockId, function (data, status) {
+                if (status == "success") {
+                    //alert("Data:\n" + JSON.stringify(data) + "\nStatus:\n" + String(status));
+                    var info = jQuery.parseJSON(JSON.stringify(data));
+                    $("#stock-price-info").text("");
+                    $("#stock-price-info").append("股票名称：" + info.StockName + " " + info.Data + " " + info.Time + "</p>");
+                    $("#stock-price-info").append("<p>当前价格：" + info.PriceNow + "</p>");
+                    $("#stock-price-info").append("<p>今日开盘：" + info.OpeningPriceToday + "</p>");
+                    $("#stock-price-info").append("<p>今日最高：" + info.HighestPriceToday + "</p>");
+                    $("#stock-price-info").append("<p>今日最低：" + info.LowestPriceToday + "</p>");
+                    $("#stock-price-info").append("<p>交易量：" + info.TradedNumber + "</p>");
+                    $("#stock-price-info").append("<p>交易额：" + info.TradedAmount + "</p>");
+                    $("#stock-price-info").append("<p>买一：" + info.BuyHands1 + "股 *" + info.BuyPrice1 + "元 ≈ " + parseInt(parseInt(info.BuyHands1) * parseFloat(info.BuyPrice1)) + "元</p>");
+                    $("#stock-price-info").append("<p>买二：" + info.BuyHands2 + "股 *" + info.BuyPrice2 + "元 ≈ " + parseInt(parseInt(info.BuyHands2) * parseFloat(info.BuyPrice2)) + "元</p>");
+                    $("#stock-price-info").append("<p>买三：" + info.BuyHands3 + "股 *" + info.BuyPrice3 + "元 ≈ " + parseInt(parseInt(info.BuyHands3) * parseFloat(info.BuyPrice3)) + "元</p>");
+                    $("#stock-price-info").append("<p>买四：" + info.BuyHands4 + "股 *" + info.BuyPrice4 + "元 ≈ " + parseInt(parseInt(info.BuyHands4) * parseFloat(info.BuyPrice4)) + "元</p>");
+                    $("#stock-price-info").append("<p>买五：" + info.BuyHands5 + "股 *" + info.BuyPrice5 + "元 ≈ " + parseInt(parseInt(info.BuyHands5) * parseFloat(info.BuyPrice5)) + "元</p>");
+                    $("#stock-price-info").append("<p>卖一：" + info.SoldHands1 + "股 *" + info.SoldPrice1 + "元 ≈ " + parseInt(parseInt(info.SoldHands1) * parseFloat(info.SoldPrice1)) + "元</p>");
+                    $("#stock-price-info").append("<p>卖二：" + info.SoldHands2 + "股 *" + info.SoldPrice2 + "元 ≈ " + parseInt(parseInt(info.SoldHands2) * parseFloat(info.SoldPrice2)) + "元</p>");
+                    $("#stock-price-info").append("<p>卖三：" + info.SoldHands3 + "股 *" + info.SoldPrice3 + "元 ≈ " + parseInt(parseInt(info.SoldHands3) * parseFloat(info.SoldPrice3)) + "元</p>");
+                    $("#stock-price-info").append("<p>卖四：" + info.SoldHands4 + "股 *" + info.SoldPrice4 + "元 ≈ " + parseInt(parseInt(info.SoldHands4) * parseFloat(info.SoldPrice4)) + "元</p>");
+                    $("#stock-price-info").append("<p>卖五：" + info.SoldHands5 + "股 *" + info.SoldPrice5 + "元 ≈ " + parseInt(parseInt(info.SoldHands5) * parseFloat(info.SoldPrice5)) + "元</p>");
+
+                } else {
+                    alert("请求错误！")
+                }
+
+            })
+        }
+        $("body").keydown(function () {
+            if (event.keyCode == "13") {//keyCode=13是回车键
+                getStockInfo();
+            }
+        });
+
+    </script>
+
+    <div style="text-align: center;margin-top: 10%" id="stock-group">
+        <div class="form-group">
+            <p>输入股票代码:</p>
+            <input class="form-inline" id="stockid" placeholder="股票代码">
+        </div>
+        <button type="submit" class="btn btn-default" id="getStockInfo" onclick="getStockInfo()">查询</button>
+        <div id="stockInfo"></div>
+    </div>
+    <div id="stock-price-info"></div>
+
+
 </div>
 <div id="stock">
 
