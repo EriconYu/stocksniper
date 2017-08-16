@@ -1,5 +1,5 @@
 bin/stocksniper
 bin/stocksniper*
 pkg/*
-cache/
-idea/*
+.cache/*
+.idea/*
