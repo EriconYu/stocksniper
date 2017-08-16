@@ -9,4 +9,4 @@ WORKDIR $GOPATH/bin
 RUN go build stocksniper
 
 EXPOSE 8080
-CMD ["$GOPATH/bin/stocksniper"]
+CMD ["/go/bin/stocksniper"]
