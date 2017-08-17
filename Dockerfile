@@ -7,6 +7,7 @@ COPY ./bin/. $GOPATH/bin/
 WORKDIR $GOPATH/bin
 
 RUN go build stocksniper
+RUN rm -rf /go/src/*
 
 EXPOSE 8080
 CMD ["/go/bin/stocksniper"]
