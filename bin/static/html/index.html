@@ -26,6 +26,7 @@
     <script>
         function getStockInfo() {
             var stockId = $("#stockid").val();
+            stockId = stockId.replace(/\s+/g, "");
             if (stockId.length != 6){
                 alert("输入的股票代码不合法！！！");
                 $("#stockid").text("");
@@ -38,6 +39,7 @@
                     $("#stock-price-info").text("");
                     $("#stock-price-info").append("股票名称：" + info.StockName + " " + info.Data + " " + info.Time + "</p>");
                     $("#stock-price-info").append("<p>当前价格：" + info.PriceNow + "</p>");
+                    $("#stock-price-info").append("<p>昨日收盘：" + info.ClosingPriceYesterday + "</p>");
                     $("#stock-price-info").append("<p>今日开盘：" + info.OpeningPriceToday + "</p>");
                     $("#stock-price-info").append("<p>今日最高：" + info.HighestPriceToday + "</p>");
                     $("#stock-price-info").append("<p>今日最低：" + info.LowestPriceToday + "</p>");
