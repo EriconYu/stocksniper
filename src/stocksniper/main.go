@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"handler"
-	"stocklib/realtimelib"
-	"time"
 
 	"os"
 
@@ -36,8 +34,6 @@ func main() {
 		os.Exit(-1)
 	}
 	// UserAPPCode
-	realtimelib.RealtimeAllStocks()
+	//realtimelib.RealtimeAllStocks()
 	//	monthlylib.MonthlyAllGoroutine()
-
-	time.Sleep(10 * time.Second)
 }
