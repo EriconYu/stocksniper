@@ -1,5 +1,36 @@
-bin/stocksniper
-bin/stocksniper*
-pkg/*
-.cache/*
-.idea/*
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Runtime data (the community edition should not commit market data)
+data/
+result/
+logs/
+*.db
+*.sqlite*
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.code-workspace
+
+# Build output
+dist/
+build/

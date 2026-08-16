@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="StockSniper A 股量化研究平台社区展示版" />
+    <title>StockSniper Community</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <span class="brand-mark">SS</span>
+          <div>
+            <strong>StockSniper</strong>
+            <span>Community</span>
+          </div>
+        </div>
+        <nav class="nav-list" id="navigation" aria-label="主导航"></nav>
+        <div class="sidebar-footer">
+          <span class="status-dot"></span>
+          <div><strong>演示环境</strong><small>不含真实交易数据</small></div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <button class="menu-button" id="menuButton" aria-label="打开导航">☰</button>
+          <div class="page-heading">
+            <span id="pageEyebrow">量化研究台</span>
+            <h1 id="pageTitle">研究总览</h1>
+          </div>
+          <div class="topbar-actions">
+            <span class="demo-badge">DEMO</span>
+            <a class="button button-secondary desktop-only" href="https://facai.stackbang.com" target="_blank" rel="noreferrer">访问正式版</a>
+            <button class="button button-primary" data-contact>联系作者</button>
+          </div>
+        </header>
+
+        <section class="content" id="content" aria-live="polite">
+          <div class="loading-state">正在加载演示界面...</div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="contactModal" hidden>
+      <section class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+        <button class="modal-close" id="closeContact" aria-label="关闭">×</button>
+        <div class="contact-copy">
+          <span class="section-kicker">完整产品</span>
+          <h2 id="contactTitle">进一步了解 StockSniper</h2>
+          <p>访问正式版体验完整数据、策略研究与回测能力，或添加作者微信沟通。</p>
+          <a href="https://facai.stackbang.com" target="_blank" rel="noreferrer">facai.stackbang.com</a>
+          <strong>微信：sudo4fate</strong>
+        </div>
+        <img src="/assets/wechat-qr.jpg" alt="作者微信二维码" />
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+    <script src="/assets/app.js" defer></script>
+  </body>
+</html>
+
